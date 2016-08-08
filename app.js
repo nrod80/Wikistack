@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 var morgan = require('morgan');
-var routes = require('./routes');
+var wikiRouter = require('./routes/wiki.js');
 var swig = require('swig');
 var database = require('./models');
 
@@ -20,7 +20,7 @@ swig.setDefaults({cache: false});
 
 app.use(express.static('public'));
 
-app.use('/', routes)
+app.use('/wiki', wikiRouter)
 
 app.listen(3000);
 database.Page.sync();
