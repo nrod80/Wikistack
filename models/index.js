@@ -16,6 +16,9 @@ var Page = db.define('page', {
         type: Sequelize.TEXT,
         allowNull: false
     },
+    tags: {
+      type: Sequelize.ARRAY(Sequelize.TEXT)
+    },
     status: {
         type: Sequelize.ENUM('open', 'closed')
     },

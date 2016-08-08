@@ -79,10 +79,14 @@ router.get('/:pagetitle', function(req, res, next) {
     Page.findOne({
             where: {
                 urlTitle: req.params.pagetitle
-            }
-        })
-        .then(function(output) {
-            res.render('wikipage', output.dataValues);
+            },
+            include: [
+              {
+                model: User, as: 'author'
+              }
+            ]
+        }).then(function(page) {
+            res.render('wikipage', {page: page});
         })
         .catch(next)
 })
