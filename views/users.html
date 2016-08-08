@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <h3>Users</h3>
+  <hr>
+  <ul class="list-unstyled">
+    <ul>
+  {% for user in users %}
+    <li><a href="/wiki/users/{{ user.dataValues.id }}">{{user.dataValues.name}}</a></li>
+    <li>{{ user.dataValues.email }}</li>
+    <br />
+  {% endfor %}
+</ul>
+  </ul>
+{% endblock %}

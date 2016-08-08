@@ -23,5 +23,5 @@ app.use(express.static('public'));
 app.use('/wiki', wikiRouter)
 
 app.listen(3000);
-database.Page.sync({force: true});
-database.User.sync({force: true});
+database.Page.sync();
+database.User.sync();

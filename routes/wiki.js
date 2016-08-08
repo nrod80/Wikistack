@@ -17,23 +17,53 @@ router.get('/', function(req, res, next) {
     })
 });
 
+router.get('/users/', function(req, res, next){
+  User.findAll()
+    .then(function(users){
+      res.render('users', {users: users});
+    })
+})
+
+router.get('/users/:id', function(req, res, next){
+  var pagePromise = Page.findAll({ where: {authorId: req.params.id}});
+  var userPromise = User.findById(req.params.id);
+
+  Promise.all([pagePromise, userPromise])
+    .then(function(promiseArray){
+      res.render('singleuser', {pages: promiseArray[0], user: promiseArray[1]})
+    }).catch(next)
+
+})
+
 router.post('/', urlencodedParser, function(req, res, next) {
 
     // STUDENT ASSIGNMENT:
     // add definitions for `title` and `content`
-    var page = Page.build({
-        title: req.body.title,
-        content: req.body.content,
-        status: req.body.status
-    });
 
-    // STUDENT ASSIGNMENT:
-    // make sure we only redirect *after* our save is complete!
-    // note: `.save` returns a promise or it can take a callback.
-    page.save()
-        .then(function(savedPage){
-          res.redirect(savedPage.url) // route virtual FTW
-        }).catch(next);
+    User.findOrCreate({
+  where: {
+    name: req.body.name,
+    email: req.body.email
+  }
+})
+.then(function (values) {
+
+  var user = values[0];
+
+  var page = Page.build({
+    title: req.body.title,
+    content: req.body.content
+  });
+
+  return page.save().then(function (page) {
+    return page.setAuthor(user);
+  });
+
+})
+.then(function (page) {
+  res.redirect(page.url);
+})
+.catch(next);
 
 
 
@@ -52,7 +82,6 @@ router.get('/:pagetitle', function(req, res, next) {
             }
         })
         .then(function(output) {
-            console.log(output);
             res.render('wikipage', output.dataValues);
         })
         .catch(next)
