@@ -1,14 +1,32 @@
-{% extends "layout.html" %}
+{% extends "layout.html" %} {% block content %}
+<div class='container'>
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Pages</h3>
+        </div>
+        <div class="col-md-4">
+          <br />
+            <form method="GET" action="/wiki/search">
+                <input type="text" name="tag" placeholder="Search For Tags" />
+                <button type='submit' class='btn btn-primary'>Search!</button>
+            </form>
+        </div>
+        <div class="col-md-4">
+          <br />
+          <a href='./add'><button class='btn btn-danger' >Add Page</button></a>
+        </div>
+    </div>
+</div>
 
-{% block content %}
-  <h3>Pages</h3>
-  <hr>
-  <ul class="list-unstyled">
+<hr>
+
+<ul class="list-unstyled">
     <ul>
-  {% for page in pages %}
-    <!-- TODO use getter functoin here -->
-    <li><a href="/wiki/{{ page.dataValues.urlTitle }}">{{page.dataValues.title}}</a></li>
-  {% endfor %}
+        {% for page in pages %}
+        <!-- TODO use getter functoin here -->
+        <div class="page-link" <li><a href="/wiki/{{ page.dataValues.urlTitle }}">{{page.dataValues.title}}</a></li>
+        </div>
+        {% endfor %}
+    </ul>
 </ul>
-  </ul>
 {% endblock %}

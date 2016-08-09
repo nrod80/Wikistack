@@ -6,3 +6,12 @@ body {
 a {
   color: #00B7FF;
 }
+
+.toppart {
+  float:left;
+  display: inline;
+}
+
+.page-link {
+  padding: 10px;
+}

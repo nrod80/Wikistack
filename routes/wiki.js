@@ -111,11 +111,27 @@ router.get('/add', function(req, res, next) {
     res.render('addpage')
 });
 
+router.get('/search', urlencodedParser, function(req, res, next) {
+    var tagsToFind = req.query.tag.replace(/\s+/g,'').split(',');
+    var test = Page.findAll({
+        where: {
+            tags: {
+                $overlap: tagsToFind
+            }
+        }
+    }).then(function(pages) {
+        console.log(pages);
+        res.render('index', {
+            pages: pages
+        })
+    })
+})
+
 
 router.get('/:pagetitle', function(req, res, next) {
     Page.findOne(getPage(req.params.pagetitle))
         .then(function(page) {
-            console.log(page);
+            //console.log(page);
             res.render('wikipage', {
                 page: page
             });
@@ -137,31 +153,23 @@ router.post('/:pagetitle/delete', urlencodedParser, function(req, res, next) {
     Page.findOne(getPage(req.params.pagetitle))
         .then(function(page) {
             var theTags = page.dataValues.tags;
-            for (var key in req.body){
-              theTags.splice(key, 1)
+            for (var key in req.body) {
+                theTags.splice(key, 1)
             }
             page.update({
-              tags: theTags,
-              where: {
-                urltitle: req.params.pagetitle
-              }
+                tags: theTags,
+                where: {
+                    urltitle: req.params.pagetitle
+                }
             })
             res.render('wikipage', {
-              page: page
+                page: page
             });
         })
-
-
-
-
-    // .then(function(page) {
-    //   console.log(page);
-    //     res.render('wikipage', {
-    //         page: page
-    //     });
-    // })
-    // .catch(next)
+        .catch(next);
 })
+
+
 
 
 
