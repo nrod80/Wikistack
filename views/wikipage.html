@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <h3>{{ page.title }} <small> (<a href="./search?tag={{page.dataValues.tags}}">Similar</a>)</small></h3>
+  <h4>by <a href="/wiki/users/{{page.dataValues.author.id}}">{{ page.dataValues.author.name }}</a></h4>
+  <div>
+    <ul>
+      <!-- we need to make this work (tags in html)-->
+      {% for tag in page.dataValues.tags %}
+      <li>
+        <a href="./search?tag={{tag}}">{{tag}}</a>
+      </li>
+      {% endfor %}
+    </ul>
+    <a href="{{page.dataValues.urlTitle}}/delete">Click here to Delete Tags</a>
+  </div>
+  <hr/>
+  <div class="page-body">{{ page.content }}</div>
+  <hr/>
+  <a href="PLACEHOLDER_URL_TITLE/edit" class="btn btn-primary">edit this page</a>
+  <a href="PLACEHOLDER_URL_TITLE/delete" class="btn btn-danger">delete this page</a>
+{% endblock %}

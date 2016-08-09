@@ -1,0 +1,22 @@
+{% extends "layout.html" %} {% block content %}
+<h3>{{ page.title }} <small> (<a href="www.placeholder.com">Similar</a>)</small></h3>
+<h4>by <a href="/wiki/users/{{page.dataValues.author.id}}">{{ page.dataValues.author.name }}</a></h4>
+<div>
+    <ul>
+        <!-- we need to make this work (tags in html)-->
+        <h2>Select Tags To Delete</h2>
+        <form method="POST" action='./delete'>
+            {% for tag in page.dataValues.tags %}
+            <label><input type='checkbox' name='{{loop.index0}}' value='{{tag}}' />{{tag}}</label>
+            {% endfor %}
+            <br />
+            <button type='submit' class="btn btn-danger">DELETE</button>
+        </form>
+
+    </ul>
+</div>
+<hr/>
+<div class="page-body">{{ page.content }}</div>
+<hr/>
+<a href="PLACEHOLDER_URL_TITLE/edit" class="btn btn-primary">edit this page</a>
+<a href="PLACEHOLDER_URL_TITLE/delete" class="btn btn-danger">delete this page</a> {% endblock %}
