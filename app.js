@@ -20,6 +20,10 @@ swig.setDefaults({cache: false});
 
 app.use(express.static('public'));
 
+app.get('/', function(req, res){
+  res.redirect('/wiki');
+})
+
 app.use('/wiki', wikiRouter)
 
 app.listen(3000);

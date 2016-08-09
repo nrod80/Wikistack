@@ -5,13 +5,14 @@
   <h4>by <a href="/wiki/users/{{page.dataValues.author.id}}">{{ page.dataValues.author.name }}</a></h4>
   <div>
     <ul>
-      {% for tag in page.dataValues.tags}
+      <!-- we need to make this work (tags in html)-->
+      {% for tag in page.dataValues.tags %}
       <li>
         {{tag}}
       </li>
       {% endfor %}
     </ul>
-}
+    <a href="{{page.dataValues.urlTitle}}/delete">Click here to Delete Tags</a>
   </div>
   <hr/>
   <div class="page-body">{{ page.content }}</div>

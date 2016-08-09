@@ -6,7 +6,8 @@
   <ul class="list-unstyled">
     <ul>
   {% for page in pages %}
-    <li><a href="{{ page.dataValues.urlTitle }}">{{page.dataValues.title}}</a></li>
+    <!-- TODO use getter functoin here -->
+    <li><a href="/wiki/{{ page.dataValues.urlTitle }}">{{page.dataValues.title}}</a></li>
   {% endfor %}
 </ul>
   </ul>
